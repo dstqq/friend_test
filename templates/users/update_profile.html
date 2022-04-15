@@ -1,0 +1,55 @@
+{% extends 'homes/base.html' %}
+
+{% block content %}
+<form class="form" action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="container rounded bg-white mt-5 mb-5">
+        <div class="row">
+            <div class="col-md-3 border-right">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img
+                    src="{{ request.user.avatar.url }}"
+                    height="150"
+                    width="150"
+                    alt="avatar"
+                    title="avatar"
+                    class="rounded-circle"
+                  /><span class="font-weight-bold">{{request.user.name}}</span><span class="text-black-50">{{request.user.email}}</span><span> </span></div>
+            </div>
+            <div class="col-md-5 border-right">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="text-right">Profile Settings</h4>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-12"><label class="labels">Name</label><input type="text" class="form-control" name="name" placeholder="Full name" value="{{ request.user.name }}"></div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12"><label class="labels">Username</label><input type="text" class="form-control" name="username" placeholder="Enter username" value="{{ request.user.username }}"></div>
+                        <div class="col-md-12"><label class="labels">Bio</label><textarea type="text" class="form-control" name="bio" placeholder="Bio" rows="3">{{ request.user.bio }}</textarea></div>
+                        <div class="col-md-12"><label class="labels">E-mail address</label><input type="text" class="form-control" name="email" placeholder="Enter e-mail address" value="{{ request.user.email }}"></div>
+                        <div class="col-md-12"><label class="labels">Date of Birth</label><input type="text" class="form-control" name="date_of_birth" placeholder="Date of Birth" value="{{ request.user.date_of_birth }}"></div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-6"><label class="labels">Telegram account</label>
+                            {% if request.user.is_connect_to_telegram == False %}
+                                <input type="text" class="form-control" name="connect_telegram_form" placeholder="Enter your code" value="">
+                            {% else %}
+                                <a href="#">Отвязать телегу</a>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6"><label class="labels">State/Region</label><input type="text" class="form-control" value="" placeholder="state"></div>
+                    </div>
+                    <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
+                    <div class="mt-5 text-right"><small class="text-muted">Registration date: {{request.user.date_join}}</small> </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center experience"><span>Edit Experience</span><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Experience</span></div><br>
+                    <div class="col-md-12"><label class="labels">Experience in Designing</label><input type="text" class="form-control" placeholder="experience" value=""></div> <br>
+                    <div class="col-md-12"><label class="labels">Additional Details</label><input type="text" class="form-control" placeholder="additional details" value=""></div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

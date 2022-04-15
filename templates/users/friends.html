@@ -1,0 +1,141 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Friends</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link rel="stylesheet" href="{% static 'css/base.css' %}" />
+    <script src="{% static 'js/scripts.js' %}"></script>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <header>{% include 'homes/navbar.html' %}</header>
+  <body>
+    <div class="d-flex" id="wrapper">
+      <!-- Sidebar-->
+      <div class="border-end bg-white" id="sidebar-wrapper">
+        <div class="sidebar-heading border-bottom bg-light">
+          Friendship manager
+        </div>
+        <div class="list-group list-group-flush">
+          <a
+            class="
+              list-group-item list-group-item-action list-group-item-light
+              p-3
+            "
+            href="{% url 'friends' %}"
+            >Friends</a
+          >
+          <a
+            class="
+              list-group-item list-group-item-action list-group-item-light
+              p-3
+            "
+            href="{% url 'friend_requests' %}"
+            >Requests</a
+          >
+          <a
+            class="
+              list-group-item list-group-item-action list-group-item-light
+              p-3
+            "
+            href="{% url 'profile' user.pk %}"
+            >My profile</a
+          >
+          <a
+            class="
+              list-group-item list-group-item-action list-group-item-light
+              p-3
+            "
+            href="#!"
+            >Home</a
+          >
+        </div>
+      </div>
+
+      <!-- Page content wrapper-->
+      <div id="page-content-wrapper">
+        {% block content %}
+        <!-- Page content-->
+        <div class="container-fluid">
+          {% for friend in friends %}
+          <div class="card mb-3" style="max-width: 580px">
+            <div class="row g-0">
+              <div class="col-md-3">
+                <a href="{% url 'profile' friend.to_user.pk %}">
+                  <img
+                    src="{{ friend.to_user.avatar.url }}"
+                    height="180"
+                    width="180"
+                    alt="avatar"
+                    title="avatar"
+                    class="rounded-circle"
+                    style="padding: 5% 5%"
+                  />
+                </a>
+              </div>
+              <div class="col-md-9">
+                <div class="card-body" style="margin-left: 15px">
+                  <a href="{% url 'profile' friend.to_user.pk %}"
+                    ><h5 class="card-title">@{{friend.to_user.username}}</h5></a
+                  >
+                  <p class="card-text">This is a wider</p>
+                    
+
+                </div>
+                <div class="card-footer" style="margin-left: 15px">
+                  <div class="row">
+                    <div class="col-9">
+                      <small class="text-muted">No games yet</small>
+                    </div>
+                    <div class="col-3">
+                      <a href="{% url 'delete_from_friends' friend.to_user.id %}" style="color: red">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                          <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+                        </svg>
+                        <smaall class="text-danger">Delete</smaall>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% empty %}
+          <p>No friends yet</p>
+          {% endfor %}
+        </div>
+
+        {% endblock %}
+      </div>
+    </div>
+    {% if messages %} {% for message in messages %} {% if message == 'new friend' %}
+    <div class="alert alert-success">
+      <strong>Success!</strong> Now You have a new friend.
+    </div>
+    {% endif %} {% endfor %} {% endif %}
+  </body>
+</html>

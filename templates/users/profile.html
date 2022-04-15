@@ -1,0 +1,59 @@
+{% extends 'homes/base.html' %}
+<html>
+  <body>
+    {% block content %}
+    <p class="aligncenter">
+      <img
+        src="{{ user_profile.avatar.url }}"
+        height="150"
+        width="150"
+        alt="avatar"
+        title="avatar"
+        class="rounded-circle"
+      />
+    </p>
+    <div class="profile__info">
+      {% if user_profile.name != None %}
+      <h3>{{user_profile.name}}</h3>
+      {% endif %}
+      <p>@{{user_profile.username}}</p>
+      {% if request.user == user_profile %}
+      <!-- Your profile-->
+      <a href="{% url 'update_profile' %}" class="btn btn--main btn--pill"
+        >Edit Profile</a
+      >
+      {% else %}
+      <!-- Another user profile-->
+      {% if status == 'friends' %}
+      <h3>You are already friendos</h3> <a href="{% url 'delete_from_friends' user_profile.id %}">Delete friend</a>
+      {% elif status == 'request_to_me' %}
+      <a href="{% url 'accept_friend_request' friend_request.id %}"
+        >Accept friend request</a
+      >
+      {% elif status == 'request_from_me' %}
+      <a href="{% url 'cancel_my_friend_request' user_profile.id %}"
+        >Cancel my request</a
+      >
+      {% else %}
+      <a href="{% url 'send_friend_request' user_profile.id %}"
+        >Send friend request</a
+      >
+      {% endif %} {% endif %}
+    </div>
+    <p>User email: {{user_profile.email}}</p>
+    {% if user_profile.bio != None %}
+    <p>User bio: {{user_profile.bio }}</p>
+    {% endif %}
+    <p>User registration date: {{user_profile.date_join}}</p>
+    {% if messages %} 
+      {% for message in messages %} 
+        {% if message == 'new friend' %}
+          <div class="alert alert-success">
+            <strong>Success!</strong> Now You have a new friend.
+          </div>
+        {% endif %} 
+      {% endfor %}
+    {% endif %} 
+    {% endblock content %}
+  </body>
+</html>

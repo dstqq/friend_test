@@ -1,0 +1,13 @@
+{% extends 'homes/base.html' %}
+
+{% block content %}
+<a href="articles/"><h1>Skoro budet(net)</h1></a>
+<ul>
+    {% for home in homes %}
+    <div class="post-entry">
+        <li><a href="{% url 'home_detail' home.pk %}">{{ home.title }}</a></li>
+        <li>{{home.address}}</li>
+    </div>
+    {% endfor %}
+</ul>
+{% endblock %}
